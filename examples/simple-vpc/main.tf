@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 locals {
-  region = "eu-west-1"
+  region = "eu-north-1"
 }
 
 ################################################################################
@@ -13,12 +13,12 @@ locals {
 module "vpc" {
   source = "../../"
 
-  name = "simple-example"
-  cidr = "10.0.0.0/16"
+  name = "aws-snb-vpc-main"
+  cidr = "10.0.0.0/20"
 
   azs             = ["${local.region}a", "${local.region}b", "${local.region}c"]
-  private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-  public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
+  private_subnets = ["10.0.3.0/24", "10.0.4.0/24", "10.0.5.0/24"]
+  public_subnets  = ["10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24"]
 
   enable_ipv6 = true
 
@@ -30,11 +30,16 @@ module "vpc" {
   }
 
   tags = {
-    Owner       = "user"
+    Name       = "aws-snb-vpc-main"
+    Creator    = "Venkatesh"
     Environment = "dev"
+    CostCenter = "LUM1234"
   }
 
   vpc_tags = {
-    Name = "vpc-name"
+    Name       = "aws-snb-vpc-main"
+    Creator    = "Venkatesh"
+    Environment = "dev"
+    CostCenter = "LUM1234"
   }
 }
